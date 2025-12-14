@@ -1,0 +1,142 @@
+{
+  "1": {
+    "name": "Leo",
+    "surname": "Gianni",
+    "username": "lgianni",
+    "email": "leo.gianni@gmail.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "2": {
+    "name": "Marco",
+    "surname": "Rossi",
+    "username": "mrossi",
+    "email": "marco.rossi@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "3": {
+    "name": "Giulia",
+    "surname": "Bianchi",
+    "username": "gbianchi",
+    "email": "giulia.bianchi@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "4": {
+    "name": "Luca",
+    "surname": "Verdi",
+    "username": "lverdi",
+    "email": "luca.verdi@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "5": {
+    "name": "Sara",
+    "surname": "Neri",
+    "username": "sneri",
+    "email": "sara.neri@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "6": {
+    "name": "Alessandro",
+    "surname": "Conti",
+    "username": "aconti",
+    "email": "alessandro.conti@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "7": {
+    "name": "Francesca",
+    "surname": "Moretti",
+    "username": "fmoretti",
+    "email": "francesca.moretti@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "8": {
+    "name": "Davide",
+    "surname": "Ferrari",
+    "username": "dferrari",
+    "email": "davide.ferrari@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "9": {
+    "name": "Elena",
+    "surname": "Romano",
+    "username": "eromano",
+    "email": "elena.romano@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "10": {
+    "name": "Matteo",
+    "surname": "Gallo",
+    "username": "mgallo",
+    "email": "matteo.gallo@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "11": {
+    "name": "Chiara",
+    "surname": "Costa",
+    "username": "ccosta",
+    "email": "chiara.costa@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "12": {
+    "name": "Simone",
+    "surname": "Fontana",
+    "username": "sfontana",
+    "email": "simone.fontana@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "13": {
+    "name": "Valentina",
+    "surname": "Marini",
+    "username": "vmarini",
+    "email": "valentina.marini@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "14": {
+    "name": "Andrea",
+    "surname": "Rinaldi",
+    "username": "arinaldi",
+    "email": "andrea.rinaldi@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "15": {
+    "name": "Federica",
+    "surname": "Greco",
+    "username": "fgreco",
+    "email": "federica.greco@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "16": {
+    "name": "Paolo",
+    "surname": "DeLuca",
+    "username": "pdeluca",
+    "email": "paolo.deluca@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "17": {
+    "name": "Martina",
+    "surname": "Serra",
+    "username": "mserra",
+    "email": "martina.serra@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "18": {
+    "name": "Stefano",
+    "surname": "Mancini",
+    "username": "smancini",
+    "email": "stefano.mancini@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "19": {
+    "name": "Laura",
+    "surname": "Colombo",
+    "username": "lcolombo",
+    "email": "laura.colombo@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  },
+  "20": {
+    "name": "Nicolo",
+    "surname": "Fabbri",
+    "username": "nfabbri",
+    "email": "nicolo.fabbri@example.com",
+    "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa"
+  }
+}
