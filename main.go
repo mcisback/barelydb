@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -88,6 +89,32 @@ func main() {
 			for id, data := range tableData {
 				tableData[id] = QueryDataByFields(data.(map[string]any), fields)
 			}
+		}
+
+		limit, ok := queryString["limit"]
+		if ok && limit != "" {
+			fmt.Println("[QUERYSTRING] ?limit= exists:", limit)
+
+			limitInt, err := strconv.Atoi(limit)
+			if err != nil {
+				return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+					"error": "Invalid limit value",
+				})
+			}
+
+			newData := make(JsonKV)
+			count := 0
+			for id, data := range tableData {
+				if count >= limitInt {
+					break
+				}
+
+				newData[id] = data
+
+				count++
+			}
+
+			tableData = newData
 		}
 
 		return c.JSON(tableData)
