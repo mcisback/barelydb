@@ -22,11 +22,11 @@ const ROOT_DIR_NAME = "barelydb_data"
 // page=1&per-page=25
 // search-by=column_name&search-term=value
 // sort=id,views
-// limit=10
+// ✅ limit=10
 // query="email=example@example.com AND|OR name=Giovanni"
 // query="email"
 // query="email = example@example.com"
-// fields=username,name,email
+// ✅ fields=username,name,email
 
 func main() {
 	app := fiber.New()
