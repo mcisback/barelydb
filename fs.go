@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"path/filepath"
 )
 
 func DirExists(path string) (bool, os.FileInfo) {
@@ -20,4 +21,13 @@ func CreateDir(path string) {
 	if !IsOk(err) {
 		panic(err)
 	}
+}
+
+func realPathDir(path string) (string, error) {
+	abs, err := filepath.Abs(path)
+	if err != nil {
+		return "", err
+	}
+
+	return filepath.EvalSymlinks(abs)
 }

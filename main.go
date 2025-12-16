@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 
@@ -15,17 +16,33 @@ const ROOT_DIR_NAME = "barelydb_data"
 // TODO: Implement pagination and filtering
 // TODO: Implement error handling and logging?
 // TODO: Implement authentication and authorization
+//
+// QS Params:
+// page=1&per-page=25
+// search-by=column_name&search-term=value
+// sort=id,views
+// limit=10
+// query="email=example@example.com AND|OR name=Giovanni"
+// query="email"
+// query="email = example@example.com"
 
 func main() {
 	app := fiber.New()
 
-	dbRootDir := getRootDatabaseDirectory(ROOT_DIR_NAME)
+	var rootDB string
 
-	if ok, _ := DirExists(dbRootDir); !ok {
-		CreateDir(dbRootDir)
+	flag.StringVar(&rootDB, "root-db", "", "Root database DSN")
+	flag.StringVar(&rootDB, "d", "", "Alias for --root-db")
 
-		fmt.Println("Created rootdatabase directory: ", dbRootDir)
+	flag.Parse()
+
+	fmt.Println("root-db =", rootDB)
+
+	if rootDB == "" {
+		PrintAndExit("Error: Root database relative or absolute path is required\n")
 	}
+
+	dbRootDir := getRootDatabaseDirectory(rootDB)
 
 	fmt.Println("Loading root database directory: ", dbRootDir)
 
@@ -49,6 +66,14 @@ func main() {
 		tableData := LoadTable(dbRootDir, database, table)
 
 		queryString := c.Queries()
+
+		// data := make(map[string]any)
+
+		// TODO: implement limit
+		// limit, ok := queryString["limit"]
+		// if ok {
+		// 	tableData = tableData[:limit]
+		// }
 
 		fmt.Println("GET ", database, "/", table)
 		fmt.Println("GET Raw QueryString:", string(c.Request().URI().QueryString()))
@@ -102,6 +127,67 @@ func main() {
 		data["id"] = id
 
 		return c.JSON(data)
+	})
+
+	// Create a new record in the table
+	app.Post("/:database/:table", func(c *fiber.Ctx) error {
+		database := c.Params("database")
+		table := c.Params("table")
+
+		if !DatabaseExists(dbRootDir, database) {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": "Database Not Found",
+			})
+		}
+
+		if !TableExists(dbRootDir, database, table) {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": "Table Not Found",
+			})
+		}
+
+		var payload map[string]any
+
+		if err := c.BodyParser(&payload); err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": "Invalid JSON body",
+			})
+		}
+
+		id, ok := payload["id"]
+		if !ok {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": "Payload does not contain an 'id' field",
+			})
+		}
+
+		tableData := LoadTable(dbRootDir, database, table)
+
+		_, ok = tableData[id.(string)]
+		if ok {
+			return c.Status(fiber.StatusConflict).JSON(fiber.Map{
+				"error": "Record already exists, use PUT or PATCH to update",
+			})
+		}
+
+		queryString := c.Queries()
+
+		fmt.Println("GET ", database, "/", table, "/", id)
+		fmt.Println("GET Raw QueryString:", string(c.Request().URI().QueryString()))
+		fmt.Println("GET Parsed QueryString:", queryString)
+		fmt.Println("GET Table Data: ", tableData)
+
+		tableData[id.(string)] = payload
+
+		WriteTable(dbRootDir, database, table, tableData)
+
+		return c.JSON(fiber.Map{
+			"message":  "Record created successfully",
+			"data":     tableData[id.(string)],
+			"id":       id,
+			"table":    table,
+			"database": database,
+		})
 	})
 
 	log.Fatal(app.Listen(LISTEN_PORT))

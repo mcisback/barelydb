@@ -5,8 +5,6 @@ import (
 	"os"
 )
 
-// NOTE: remove panic and add print error here ?
-//
 //go:vet:printf PrintError 1 2
 func PrintError(errorMessage ...any) {
 	if len(errorMessage) > 0 {
@@ -37,13 +35,8 @@ func (o Ok[T]) Or(callback func(error)) T {
 	if o.Err != nil {
 		callback(o.Err)
 	}
-	var zero T
 
-	if o.Value == nil {
-		return zero
-	}
-
-	return *o.Value
+	return o.GetValue()
 }
 
 func (o Ok[T]) OrPanic(errorMessage ...any) T {
@@ -52,26 +45,16 @@ func (o Ok[T]) OrPanic(errorMessage ...any) T {
 
 		panic(o.Err)
 	}
-	var zero T
 
-	if o.Value == nil {
-		return zero
-	}
-
-	return *o.Value
+	return o.GetValue()
 }
 
 func (o Ok[T]) OrPrint(errorMessage ...any) T {
 	if o.Err != nil {
 		PrintError(errorMessage...)
 	}
-	var zero T
 
-	if o.Value == nil {
-		return zero
-	}
-
-	return *o.Value
+	return o.GetValue()
 }
 
 func (o Ok[T]) OrPrintAndExit(errorMessage ...any) T {
@@ -80,6 +63,11 @@ func (o Ok[T]) OrPrintAndExit(errorMessage ...any) T {
 
 		os.Exit(1)
 	}
+
+	return o.GetValue()
+}
+
+func (o Ok[T]) GetValue() T {
 	var zero T
 
 	if o.Value == nil {
@@ -87,6 +75,12 @@ func (o Ok[T]) OrPrintAndExit(errorMessage ...any) T {
 	}
 
 	return *o.Value
+}
+
+func PrintAndExit(format string, errorMessage ...any) {
+	fmt.Fprintf(os.Stderr, format, errorMessage...)
+
+	os.Exit(1)
 }
 
 func IsError(err error) bool {

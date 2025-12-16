@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type JsonKV map[string]any
@@ -36,12 +38,27 @@ func TableExists(dbRootDir string, database string, table string) bool {
 
 // Get the root folder containing all the databases
 func getRootDatabaseDirectory(dirName string) string {
-	wd, err := os.Getwd()
-	if err != nil {
-		panic(err)
+	var dbRootDir string
+
+	if strings.HasPrefix(dirName, "/") {
+		dbRootDir = dirName
+	} else {
+
+		wd, err := os.Getwd()
+		if err != nil {
+			panic(err)
+		}
+
+		dbRootDir = filepath.Join(wd, dirName)
 	}
 
-	return filepath.Join(wd, dirName)
+	if ok, _ := DirExists(dbRootDir); !ok {
+		CreateDir(dbRootDir)
+
+		fmt.Println("Created rootdatabase directory: ", dbRootDir)
+	}
+
+	return dbRootDir
 }
 
 // DatabaseExistsOrCreate creates a database if it doesn't exist and returns its path.
@@ -60,7 +77,7 @@ func DatabaseExistsOrCreate(dbRootDir string, database string) string {
 func CreateTable(tablePath string) {
 	TrySingle(
 		os.WriteFile(tablePath, []byte("{}\n"), 0644),
-	).OrPanic("Error creating table %s\n", tablePath)
+	).OrPanic("Error creating table: ", tablePath, "\n")
 }
 
 func TableExistsOrCreate(dbRootDir string, database string, table string) string {
@@ -80,13 +97,25 @@ func LoadTable(dbRootDir string, database string, table string) JsonKV {
 
 	fileContents := Try(
 		os.ReadFile(tablePath),
-	).OrPanic("Error reading table %s\n", table)
+	).OrPanic("Error reading table: ", table, "\n")
 
 	var data JsonKV
 
 	TrySingle(
 		json.Unmarshal(fileContents, &data),
-	).OrPanic("Error unmarshalling table %s\n", table)
+	).OrPanic("Error unmarshalling table: ", table, "\n")
 
 	return data
+}
+
+func WriteTable(dbRootDir string, database string, table string, tableData JsonKV) {
+	tablePath := TableExistsOrCreate(dbRootDir, database, table)
+
+	b := Try(
+		json.MarshalIndent(tableData, "", "  "),
+	).OrPrint("Error on MarshalIndent in Write Table: ", database, ".", table)
+
+	TrySingle(
+		os.WriteFile(tablePath, b, 0644),
+	).OrPanic("Error on MarshalIndent in Write Table: ", database, ".", table)
 }
