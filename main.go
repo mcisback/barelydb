@@ -190,5 +190,121 @@ func main() {
 		})
 	})
 
+	// Update a record in a table
+	app.Put("/:database/:table/:id", func(c *fiber.Ctx) error {
+		database := c.Params("database")
+		table := c.Params("table")
+		id := c.Params("id")
+
+		if !DatabaseExists(dbRootDir, database) {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": "Database Not Found",
+			})
+		}
+
+		if !TableExists(dbRootDir, database, table) {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": "Table Not Found",
+			})
+		}
+
+		var payload map[string]any
+
+		if err := c.BodyParser(&payload); err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": "Invalid JSON body",
+			})
+		}
+
+		tableData := LoadTable(dbRootDir, database, table)
+
+		_, ok := tableData[id]
+		if !ok {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": "Record doesn't exist",
+			})
+		}
+
+		queryString := c.Queries()
+
+		fmt.Println("GET ", database, "/", table, "/", id)
+		fmt.Println("GET Raw QueryString:", string(c.Request().URI().QueryString()))
+		fmt.Println("GET Parsed QueryString:", queryString)
+		fmt.Println("GET Table Data: ", tableData)
+
+		tableData[id] = payload
+
+		WriteTable(dbRootDir, database, table, tableData)
+
+		return c.JSON(fiber.Map{
+			"message":  "Record updated successfully",
+			"data":     tableData[id],
+			"id":       id,
+			"table":    table,
+			"database": database,
+		})
+	})
+
+	// Patch a record in a table
+	app.Patch("/:database/:table/:id", func(c *fiber.Ctx) error {
+		database := c.Params("database")
+		table := c.Params("table")
+		id := c.Params("id")
+
+		if !DatabaseExists(dbRootDir, database) {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": "Database Not Found",
+			})
+		}
+
+		if !TableExists(dbRootDir, database, table) {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": "Table Not Found",
+			})
+		}
+
+		var payload map[string]any
+
+		if err := c.BodyParser(&payload); err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": "Invalid JSON body",
+			})
+		}
+
+		tableData := LoadTable(dbRootDir, database, table)
+
+		_, ok := tableData[id]
+		if !ok {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": "Record doesn't exist",
+			})
+		}
+
+		queryString := c.Queries()
+
+		fmt.Println("GET ", database, "/", table, "/", id)
+		fmt.Println("GET Raw QueryString:", string(c.Request().URI().QueryString()))
+		fmt.Println("GET Parsed QueryString:", queryString)
+		fmt.Println("GET Table Data: ", tableData)
+
+		existing := tableData[id].(map[string]any)
+
+		for k, v := range payload {
+			existing[k] = v
+		}
+
+		tableData[id] = existing
+
+		WriteTable(dbRootDir, database, table, tableData)
+
+		return c.JSON(fiber.Map{
+			"message":  "Record patched successfully",
+			"data":     tableData[id],
+			"id":       id,
+			"table":    table,
+			"database": database,
+		})
+	})
+
 	log.Fatal(app.Listen(LISTEN_PORT))
 }

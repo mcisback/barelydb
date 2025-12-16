@@ -99,16 +99,15 @@
     "username": "lgianni"
   },
   "22": {
-    "email": "asdrubale.guarracino@gmail.com",
-    "id": "22",
-    "name": "Asdrubale",
+    "email": "asdrubalINO.guarracino@gmail.com",
+    "name": "AsdrubalINO",
     "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa",
     "surname": "Guarracino",
     "username": "aguarra"
   },
   "3": {
-    "email": "giulia.bianchi@example.com",
-    "name": "Giulia",
+    "email": "gianni.bianchi@gmail.com",
+    "name": "Gianni",
     "password": "$2y$10$HV1oGqO867bilUQIdwG5KO7eyr4dxYb.FoNDM6O16oeBlbEKuTgKa",
     "surname": "Bianchi",
     "username": "gbianchi"
