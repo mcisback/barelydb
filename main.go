@@ -80,7 +80,7 @@ func main() {
 		fmt.Println("GET ", database, "/", table)
 		fmt.Println("GET Raw QueryString:", string(c.Request().URI().QueryString()))
 		fmt.Println("GET Parsed QueryString:", queryString)
-		fmt.Println("GET Table Data: ", tableData)
+		// fmt.Println("GET Table Data: ", tableData)
 
 		fields, ok := queryString["fields"]
 		if ok && fields != "" {
@@ -145,7 +145,7 @@ func main() {
 		fmt.Println("GET ", database, "/", table, "/", id)
 		fmt.Println("GET Raw QueryString:", string(c.Request().URI().QueryString()))
 		fmt.Println("GET Parsed QueryString:", queryString)
-		fmt.Println("GET Table Data: ", tableData)
+		// fmt.Println("GET Table Data: ", tableData)
 
 		raw, ok := tableData[id]
 		if !ok {
@@ -219,7 +219,7 @@ func main() {
 		fmt.Println("GET ", database, "/", table, "/", id)
 		fmt.Println("GET Raw QueryString:", string(c.Request().URI().QueryString()))
 		fmt.Println("GET Parsed QueryString:", queryString)
-		fmt.Println("GET Table Data: ", tableData)
+		// fmt.Println("GET Table Data: ", tableData)
 
 		tableData[id.(string)] = payload
 
@@ -274,7 +274,7 @@ func main() {
 		fmt.Println("GET ", database, "/", table, "/", id)
 		fmt.Println("GET Raw QueryString:", string(c.Request().URI().QueryString()))
 		fmt.Println("GET Parsed QueryString:", queryString)
-		fmt.Println("GET Table Data: ", tableData)
+		// fmt.Println("GET Table Data: ", tableData)
 
 		tableData[id] = payload
 
@@ -329,7 +329,7 @@ func main() {
 		fmt.Println("GET ", database, "/", table, "/", id)
 		fmt.Println("GET Raw QueryString:", string(c.Request().URI().QueryString()))
 		fmt.Println("GET Parsed QueryString:", queryString)
-		fmt.Println("GET Table Data: ", tableData)
+		// fmt.Println("GET Table Data: ", tableData)
 
 		existing := tableData[id].(map[string]any)
 
