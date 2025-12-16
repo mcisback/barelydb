@@ -25,6 +25,7 @@ const ROOT_DIR_NAME = "barelydb_data"
 // query="email=example@example.com AND|OR name=Giovanni"
 // query="email"
 // query="email = example@example.com"
+// fields=username,name,email
 
 func main() {
 	app := fiber.New()
@@ -80,6 +81,15 @@ func main() {
 		fmt.Println("GET Parsed QueryString:", queryString)
 		fmt.Println("GET Table Data: ", tableData)
 
+		fields, ok := queryString["fields"]
+		if ok && fields != "" {
+			fmt.Println("[QUERYSTRING] ?fields= exists:", fields)
+
+			for id, data := range tableData {
+				tableData[id] = QueryDataByFields(data.(map[string]any), fields)
+			}
+		}
+
 		return c.JSON(tableData)
 	})
 
@@ -125,6 +135,13 @@ func main() {
 		}
 
 		data["id"] = id
+
+		fields, ok := queryString["fields"]
+		if ok && fields != "" {
+			fmt.Println("[QUERYSTRING] ?fields= exists:", fields)
+
+			data = QueryDataByFields(data, fields)
+		}
 
 		return c.JSON(data)
 	})
